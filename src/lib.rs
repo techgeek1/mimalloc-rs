@@ -5,6 +5,7 @@ use std::alloc::{Allocator, AllocError, Layout};
 use std::ffi::c_void;
 use std::ptr::{self, NonNull};
 
+#[derive(Clone, Copy, Default, Debug)]
 pub struct MiMalloc;
 
 impl MiMalloc {
