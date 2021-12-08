@@ -35,7 +35,7 @@ fn main() {
 
         if !output.status.success() {
             panic!(
-                "Failed to clone mi-malloc repository with error '{}",
+                "Failed to clone mi-malloc repository with error '{}'",
                 String::from_utf8_lossy(&output.stderr)
             );
         }
@@ -64,8 +64,10 @@ fn main() {
     println!("cargo:rustc-link-search=native={}", search_path.display());
     println!("cargo:rustc-link-lib=static={}", lib_name);
 
-    // Tell cargo when we need to re-run
-    println!("cargo:rerun-if-changed=mimalloc");
+    // We only need to run the build script once
+    println!("cargo:rerun-if-changed=build.rs");
+    println!("cargo:rerun-if-env-changed=DEBUG");
+    println!("cargo:rerun-if-env-changed=CARGO_FEATURE_SECURE");
 }
 
 fn get_env_var<'a, T, E>(key: &str) -> Result<T, env::VarError>
