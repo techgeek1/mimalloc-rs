@@ -7,7 +7,7 @@ use std::path::PathBuf;
 use std::process::Command;
 use std::str::FromStr;
 
-use cmake;
+use cc;
 
 fn main() {
     // Gather any env vars we need
@@ -42,7 +42,7 @@ fn main() {
     }
 
     // Build the library
-    let dst = cmake::Config::new(lib_path)
+    cc::Build::new()
         .define("MAKE_BUILD_TYPE", debug)
         .define("MI_SECURE", secure)
         .define("MI_OVERRIDE", "OFF")
@@ -50,9 +50,10 @@ fn main() {
         .define("MI_BUILD_SHARED", "OFF")
         .define("MI_BUILD_TESTS", "OFF")
         .define("MI_BUILD_OBJECT", "OFF")
-        .build();
+        .include(&lib_path)
+        .compile("mimalloc");
 
-    let search_path = if is_debug { dst.join("build/Debug/") } else { dst.join("build/Release") };
+    let search_path = lib_path.join(if is_debug { "build/Debug/" } else { "build/Release" });
     let lib_name    = match (is_debug, is_secure) {
         (true, true)   => "mimalloc-secure-static-debug",
         (true, false)  => "mimalloc-static-debug",

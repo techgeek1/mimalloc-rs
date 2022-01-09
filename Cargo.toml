@@ -11,4 +11,15 @@ secure  = []
 [dependencies]
 
 [build-dependencies]
-cmake = "0.1" # Required for building the backing C library
+cc = "1.0.72" # Required for building the backing C library
+
+# TODO: Are these required? Can CC handle it?
+#[env]
+# The location where cmake is installed. Set to override which install of cmake is used.
+# The build system falls back to `$PATH` if not found. `cmake` will be installed
+# if not found in either location.
+#MIMALLOC_CMAKE             = ""
+# If true, cmake will be downloaded and installed to the target directory if not found.
+#MIMALLOC_CMAKE_INSTALL     = true
+# The url to install cmake from on windows.
+#MIMALLOC_CMAKE_URL_WINDOWS = "https://github.com/Kitware/CMake/releases/download/v3.22.0/cmake-3.22.0-windows-x86_64.zip"
