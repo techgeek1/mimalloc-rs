@@ -52,7 +52,7 @@ fn main() {
         .define("MI_BUILD_OBJECT", "OFF")
         .build();
 
-    let search_path = if is_debug { dst.join("build/Debug/") } else { dst.join("build/Release") };
+    let search_path = if is_debug { dst.join("build/Debug") } else { dst.join("build/Release") };
     let lib_name    = match (is_debug, is_secure) {
         (true, true)   => "mimalloc-secure-static-debug",
         (true, false)  => "mimalloc-static-debug",
